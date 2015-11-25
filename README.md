@@ -1,7 +1,7 @@
 # EMI-data-predictive-modelling
 Predictive modelling on EMI data set taken from kaggle
 We worked with a team of 3.
-Team Members:Kushagra Singh,Travis Armstrong,Shilpa Gussain
+Team Members:Kushagra Singh,Travis Armstrong,Shilpa Gusain
 
 Kaggle Challenge:https://www.kaggle.com/c/MusicHackathon
 Can you predict if a listener will love a new song?
@@ -16,3 +16,6 @@ Files Contained
 4.Decision_tree.R(Decision Tree Code)
 5.Visual.R(Visualization Code)
 6.Final_Report
+
+The link for further project description is here 
+Website : https://wordpress.com/post/finalprojectsdm.wordpress.com/2
