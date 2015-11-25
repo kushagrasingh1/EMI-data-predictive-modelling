@@ -1,0 +1,29 @@
+library(ggplot2)
+library("tm")
+library("SnowballC")
+library("wordcloud")
+library("plyr")
+
+#To create a wordcloud for the maximum words used by men
+d <- read.csv("C:/Users/Kushagra/Desktop/SDM/av.txt)  #Reads the text file af which contains the frequency of words#
+set.seed(1234)
+wordcloud(words = d$word, freq = d$freq, min.freq =0,scale=c(5,0.5),max.words = 100,
+          random.order=FALSE, rot.per=0.35, use.r.layout=FALSE,
+          colors=brewer.pal(8, "Dark2"))
+
+#To create a wordcloud for the maximum words used by women
+d <-  read.csv("C:/Users/Kushagra/Desktop/SDM/av.txt)  #Reads the text file af which contains the frequency of words#
+set.seed(1234)
+              wordcloud(words = d$word, freq = d$freq, min.freq =0,scale=c(5,0.5),max.words = 100,
+              random.order=FALSE, rot.per=0.35, use.r.layout=FALSE,
+              colors=brewer.pal(8, "Dark2"))
+              where the file AF is created using SQLwhich contains the freq of words
+              
+
+
+#To draw a plot between thw wworking class and ratings
+test = read.csv("C:/Users/Kushagra/Desktop/SDM/final_reg1.csv");
+attach(test)
+g<-ggplot(test, aes(RATING, WORKING))+ geom_jitter();
+
+
