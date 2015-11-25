@@ -1,0 +1,23 @@
+final_reg1 <- read.csv("C:/Users/Shilpa/Desktop/SDM/final/EMI/final_reg1.csv", header=T) #read the final train file
+FINAL_TEST <- read.csv("C:/Users/Shilpa/Desktop/SDM/final/EMI/FINAL_TEST.csv",header=T)  #read the final test file
+
+library(party) #library for CTree
+#Since R was hanging when creating decision trees for the whole dataset"final_reg1", we have subsetted the dataset on the basis of artist
+
+artist_0<- subset(final_reg1,final_reg1$TRAIN_ARTIST=="0") #Artist 0
+artist_4<- subset(final_reg1,final_reg1$TRAIN_ARTIST=="4") #Artist 4
+final<-merge(artist_0,artist_4,all=TRUE) #Merge the dataset for Artist 0 and 4
+final_ctree<- ctree(RATING~GENDER+TRAIN_ARTIST+REGION+LIKE_ARTIST, data=final) # ctree creation
+print(final_ctree) #print ctree
+
+plot(final_ctree,type="simple",main="Conditional Inference Tree")
+plot(final_ctree,main="Conditional Inference Tree")
+
+#Predict the values in test dataset on the basis of model
+
+artist_test_0<- subset(FINAL_TEST,FINAL_TEST$TRAIN_ARTIST=="0") #Artist 0
+artist_test_4<- subset(FINAL_TEST,FINAL_TEST$TRAIN_ARTIST=="4") #Artist 4
+final_tes_merge<-merge(artist_test_0,artist_test_4,all=TRUE)
+
+pred.response <- as.character (predict(final_ctree),final_tes_merge) # predict on test data
+
