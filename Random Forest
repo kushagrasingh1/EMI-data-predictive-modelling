@@ -1,0 +1,228 @@
+setwd("C:\\Leada");
+
+names (data)
+str(data)
+test<-complete.cases(data);
+
+data <- read.csv("final_reg1.csv");
+
+newdata <-read.csv("final_reg1.csv");
+
+
+data.dummyvar <- read.csv("FINAL_WDUMMY.csv");
+
+data.controls <- cforest_unbiased(ntree=10, mtry=3);
+set.seed(47);
+
+
+artistdesc <- subset(data.dummyvar, TRAIN_ARTIST==0, select=c(1-130));
+
+artistdesc1 <- subset(data.dummyvar, TRAIN_ARTIST==40, select=c(1-130));
+
+artistdesc2 <- subset(data.dummyvar, TRAIN_ARTIST==4, select=c(1-130));
+
+
+artistdesc.cforest<-cforest(as.formula(paste(colnames(artistdesc)[1], "~",
+                                       paste(colnames(artistdesc)[c(10:85)], collapse = "+"),
+                                       sep = "")),data=artistdesc);
+
+
+artistdesc1.cforest<-cforest(as.formula(paste(colnames(artistdesc1)[1], "~",
+                                        paste(colnames(artistdesc1)[c(10:85)], collapse = "+"),
+                                        sep = "")),data=artistdesc1);
+
+
+
+artistdesc2.cforest<-cforest(as.formula(paste(colnames(artistdesc2)[1], "~",
+                                        paste(colnames(artistdesc2)[c(10:85)], collapse = "+"),
+                                        sep = "")),data=artistdesc2);
+
+
+artist.region.cforest<-cforest(as.formula(paste(colnames(artistdesc)[4], "~",
+                                              paste(colnames(artistdesc)[c(115:118)], collapse = "+"),
+                                              sep = "")),data=artistdesc);
+
+
+artist1.region.cforest<-cforest(as.formula(paste(colnames(artistdesc1)[4], "~",
+                                                paste(colnames(artistdesc1)[c(115:118)], collapse = "+"),
+                                                sep = "")),data=artistdesc1);
+
+
+artist2.region.cforest<-cforest(as.formula(paste(colnames(artistdesc2)[4], "~",
+                                                 paste(colnames(artistdesc2)[c(115:118)], collapse = "+"),
+                                                 sep = "")),data=artistdesc2);
+
+
+
+artistdesc.cforest.varimp <-varimp(artistdesc.cforest,conditional=FALSE)
+artistdesc.cforest.varimp;
+dotplot(sort(artistdesc.cforest.varimp))
+
+artistdesc1.cforest.varimp <-varimp(artistdesc1.cforest,conditional=FALSE)
+artistdesc1.cforest.varimp;
+dotplot(sort(artistdesc1.cforest.varimp))
+
+artistdesc2.cforest.varimp <-varimp(artistdesc2.cforest,conditional=FALSE)
+data.cforest2.varimp;
+dotplot(sort(artistdesc2.cforest.varimp))
+
+artist.region.cforest.varimp <-varimp(artist.region.cforest,conditional=FALSE)
+artist.region.cforest.varimp;
+dotplot(sort(artist.region.cforest.varimp))
+
+artist1.region.cforest.varimp <-varimp(artist.region.cforest,conditional=FALSE)
+artist1.region.cforest.varimp;
+dotplot(sort(artist1.region.cforest.varimp))
+
+artist2.region.cforest.varimp <-varimp(artist.region.cforest,conditional=FALSE)
+artist2.region.cforest.varimp;
+dotplot(sort(artist2.region.cforest.varimp))
+
+===============================================================================================================
+
+
+
+
+
+
+attach(data)
+attach(artistdesc)
+attach(artistdesc1)
+attach(artistdesc2)
+
+data.cforest<-cforest(as.formula(paste(colnames(artistdesc)[1], "~",
+                                       paste(colnames(artistdesc)[c(10:85)], collapse = "+"),
+                                       sep = "")),data=artistdesc);
+
+
+data.cforest1<-cforest(as.formula(paste(colnames(artistdesc1)[1], "~",
+                                        paste(colnames(artistdesc1)[c(10:85)], collapse = "+"),
+                                        sep = "")),data=artistdesc1);
+
+
+
+data.cforest2<-cforest(as.formula(paste(colnames(artistdesc2)[1], "~",
+                                        paste(colnames(artistdesc2)[c(10:85)], collapse = "+"),
+                                        sep = "")),data=artistdesc2);
+
+
+
+
+
+
+
+
+artist.age.pref0.1 <- subset(data,TRAIN_ARTIST==0 &  AGE <= 21 & AGE >= 10, select=c(1-100));
+
+mean(artist.age.pref0.1$RATING_CON)
+
+artist.age.pref0.2 <- subset(data,TRAIN_ARTIST==0 &  AGE <= 35 & AGE > 21, select=c(1-100));
+
+mean(artist.age.pref0.2$RATING_CON)
+
+artist.age.pref0.3 <- subset(data,TRAIN_ARTIST==0 &  AGE <= 50 & AGE > 35, select=c(1-100));
+
+mean(artist.age.pref2$RATING_CON)
+
+artist.age.pref0.3 <- subset(data,TRAIN_ARTIST==0 &  AGE <= 65 & AGE > 50, select=c(1-100));
+
+
+
+
+artist.age.pref4.1 <- subset(data,TRAIN_ARTIST==4 &  AGE <= 21 & AGE >= 10, select=c(1-100));
+
+artist.age.pref4.2 <- subset(data,TRAIN_ARTIST==4 &  AGE <= 35 & AGE > 21, select=c(1-100));
+
+artist.age.pref4.3 <- subset(data,TRAIN_ARTIST==4 &  AGE <= 50 & AGE > 35, select=c(1-100));
+
+artist.age.pref4.4 <- subset(data,TRAIN_ARTIST==4 &  AGE <= 65 & AGE > 50, select=c(1-100));
+
+
+
+
+artist.age.pref40.1 <- subset(data,TRAIN_ARTIST==40 &  AGE <= 21 & AGE >= 10, select=c(1-100));
+
+artist.age.pref40.2 <- subset(data,TRAIN_ARTIST==40 &  AGE <= 35 & AGE > 21, select=c(1-100));
+
+artist.age.pref40.3 <- subset(data,TRAIN_ARTIST==40 &  AGE <= 50 & AGE > 35, select=c(1-100));
+
+artist.age.pref40.4 <- subset(data,TRAIN_ARTIST==40 &  AGE <= 65 & AGE > 50, select=c(1-100));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+data.cforest5<-cforest(as.formula(paste(colnames(artistdesc)[1], "~",
+paste(colnames(artistdesc)[c(10:85)], collapse = "+"),
+sep = "")),data=artistdesc);
+
+
+data.cforest1<-cforest(as.formula(paste(colnames(artistdesc1)[1], "~",
+paste(colnames(artistdesc1)[c(10:85)], collapse = "+"),
+sep = "")),data=artistdesc1);
+
+
+
+data.cforest2<-cforest(as.formula(paste(colnames(artistdesc2)[1], "~",
+paste(colnames(artistdesc2)[c(10:85)], collapse = "+"),
+sep = "")),data=artistdesc2);
+
+
+
+
+summary(test)
+
+
+data.cforest <- cforest(TRAIN_ARTIST ~ SOPHISTICATED:SOULFUL, data = newdata, controls = data.controls);
+
+newdata[1, 1:ncol(newdata)]/100;
+
+LM1 <- lm(RATING_CON ~ REGION_SOUTH + REGION_NORTH, artistdesc)
+
+glm1 <- glm(RATING_CON ~ REGION_SOUTH + REGION_NORTH, artistdesc)
+
+summary(LM1)
+
+# using subset function 
+
+
+
+
+data.cforest.varimp <-varimp(data.cforest,conditional=FALSE)
+data.cforest.varimp;
+dotplot(sort(data.cforest.varimp))
+
+data.cforest1.varimp <-varimp(data.cforest1,conditional=FALSE)
+data.cforest1.varimp;
+dotplot(sort(data.cforest1.varimp))
+
+data.cforest2.varimp <-varimp(data.cforest2,conditional=FALSE)
+data.cforest2.varimp;
+dotplot(sort(data.cforest2.varimp))
+
+
+
+
+
+
+  dotplot(sort(artist2.region.cforest.varimp), xlab="Variable", panel=function(x,y){
+  panel.dotplot(x,y,col='darkblue',pch=15,cex=1.1)
+  panel.abline(v=abs(min(artist2.region.cforest.varimp)),col="red", lty="longdash", lwd=2)
+  panel.abline(v=0, col="blue")})
+  
+  dotplot(sort(artistdesc2.cforest.varimp), xlab="Variable", panel=function(x,y){
+    panel.dotplot(x,y,col='darkblue',pch=15,cex=1.1)
+    panel.abline(v=abs(min(artistdesc2.cforest.varimp)),col="red", lty="longdash", lwd=2)
+    panel.abline(v=0, col="blue")})
